@@ -2,6 +2,45 @@
 
 #include "Sorts.h"
 
+/// слияние двух отсортированных частей массива: [l,med]+[med+1,r]
+void merge(vi &a, int l, int med, int r)
+{
+    int i = l, j = med + 1, size = 0;
+    vi ans(r - l + 1);
+    while (i <= med && j <= r)
+    {
+        if (a[i] < a[j])
+            ans[size++] = a[i++];
+        else
+            ans[size++] = a[j++];
+    }
+
+    while (i <= med)
+        ans[size++] = a[i++];
+    while (j <= r)
+        ans[size++] = a[j++];
+
+    if (size != r - l + 1)
+    {
+        cerr << "Error in function merge\n" << size << " != " << r - l + 1 << "\n";
+        if (r - l + 1 < 20)
+        {
+            cout << "\na = {";
+            for (i = l; i <= r; i++)
+                cout << a[i] << ", ";
+            cout << "}\nans ={";
+            for (i = 0; i < size; i++)
+                cout << ans[i] << ", ";
+            cout << "}\n";
+        }
+        throw runtime_error("Error in function merge: size != r-l+1");
+    }
+
+    size = 0;
+    for (i = l; i <= r; i++)
+        a[i] = ans[size++];
+}
+
 void MergeSort(vector<int> &a, int l, int r)
 {
     if (l >= r)
@@ -9,73 +48,27 @@ void MergeSort(vector<int> &a, int l, int r)
     int med = (l + r) / 2;
     MergeSort(a, l, med);
     MergeSort(a, med + 1, r);
-    int i = l, j = med + 1, index = 0;
-    vector<int> b(r - l + 1);
-    while (index <= r - l)
-    {
-        if (i > med)
-        {
-            while (index <= r - l)
-                b[index++] = a[j++];
-            break;
-        }
-        if (j > r)
-        {
-            while (index <= r - l)
-                b[index++] = a[i++];
-            break;
-        }
-        if (a[j] < a[i])
-            b[index++] = a[j++];
-        else
-            b[index++] = a[i++];
-    }
-    for (i = 0; i <= r - l; ++i)
-        a[l + i] = b[i];
-    b.clear();
+    merge(a, l, med, r);
 }
 
-
+// не работает пока что
 void FastMergeSort(vector<int> &a, int left, int right)
 {
-    int n = right + 1;
-    int i, j, k, l;
-    for (i = left; i < right; i += 2)
+    for (int i = left; i < right; i += 2)
     {
         if (a[i] > a[i + 1])
             swap(a[i], a[i + 1]);
     }
 
-    for (k = 4; k / (right - left + 1) < 2; k *= 2)
+    int k, l;
+    for (k = 4; k < right - left + 1; k *= 2)
     {
-        for (l = left; l < n; l += k)
-        {
-            i = l;
-            int index = 0;
-            vector<int> b(k);
-            int med = l + k / 2, r = min(n, l + k);
-            j = med;
-            while (index < k)
-            {
-                if (i >= med)
-                {
-                    while (index < k && j < r)
-                        b[index++] = a[j++];
-                    break;
-                }
-                if (j >= r)
-                {
-                    while (index < k && i < med)
-                        b[index++] = a[i++];
-                    break;
-                }
-                if (a[j] < a[i])
-                    b[index++] = a[j++];
-                else
-                    b[index++] = a[i++];
-            }
-            for (i = 0; i < index; ++i)
-                a[l + i] = b[i];
-        }
+        for (l = left; l + k / 2 < right; l += k)
+            merge(a, l, l + k / 2 - 1, min(l + k - 1, right));
     }
+
+    l = 0;
+    while (l < right && a[l] < a[l + 1])
+        l++;
+    merge(a, left, l, right);
 }

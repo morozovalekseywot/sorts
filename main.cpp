@@ -1,5 +1,7 @@
-#include "my_sort.h"
+#include "MiniSort.h"
 #include "Timsort.hpp"
+#include "MergeSort.h"
+#include "MiniSort.h"
 
 #define all(v) v.begin(), v.end()
 #define vpii vector<pair<int, int>>
@@ -36,8 +38,8 @@ int main()
     for (int i = 0; i < n; ++i)
         a[i] = rand() % INT32_MAX;
 
-    TestSortFunc("Timsort", TimSort, a, 0, n - 1);
-    TestSortFunc("STLSort", STlSort, a, 0, n - 1);
-    TestSortFunc("MergeSort", MergeSort, a, 0, n - 1);
+//    TestSortFunc("Timsort", TimSort, a, 0, n - 1);
+//    TestSortFunc("STLSort", STlSort, a, 0, n - 1);
+//    TestSortFunc("MergeSort", MergeSort, a, 0, n - 1);
     TestSortFunc("FastMergeSort", FastMergeSort, a, 0, n - 1);
 }

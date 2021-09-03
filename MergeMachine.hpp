@@ -49,20 +49,20 @@ struct MergeMachine
                 {
                     size--;
                     queue.pop_back();
-                    queue[size - 1] = MergeStruct(Merge(x, y));
+                    queue[size - 1] = MergeStruct(merge(x, y));
                 } else
                 {
                     size--;
                     queue.pop_back();
                     queue[size - 1] = x;
-                    queue[size - 2] = MergeStruct(Merge(z, y));
+                    queue[size - 2] = MergeStruct(merge(z, y));
                 }
             } else
                 break;
         }
     }
 
-    static vi Merge(const MergeStruct &a, const MergeStruct &b)
+    static vi merge(const MergeStruct &a, const MergeStruct &b)
     {
         vi ans(a.size + b.size);
         int i = 0, j = 0, size = 0;
@@ -100,8 +100,8 @@ struct MergeMachine
 
         if (size != a.size + b.size)
         {
-            cerr << "Error in function Merge\n" << size << " != " << a.size << " + " << b.size << "\n";
-            throw runtime_error("Error in function Merge: size != a.size + b.size");
+            cerr << "Error in function merge\n" << size << " != " << a.size << " + " << b.size << "\n";
+            throw runtime_error("Error in function merge: size != a.size + b.size");
         }
 
         return ans;
@@ -117,6 +117,6 @@ struct MergeMachine
         }
         if (size == 1)
             return queue[0].vec;
-        return Merge(queue[size - 1], queue[size - 2]);
+        return merge(queue[size - 1], queue[size - 2]);
     }
 };
