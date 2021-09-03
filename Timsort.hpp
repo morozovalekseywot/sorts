@@ -21,11 +21,10 @@ int GetMinrun(int n)
     return n + r;
 }
 
-// Сортировка вставками
-void InsertSort(vi &a, int l, int r)
+void InsertSort(vector<int> &a, int l, int r)
 {
     // r - включительно
-    for (int i = l + 1; i < r; i++)
+    for (int i = l + 1; i <= r; i++)
     {
         // upper bound находит первый элемент больше данного
         auto it = upper_bound(a.begin() + l, a.begin() + i, a[i]);
@@ -34,8 +33,7 @@ void InsertSort(vi &a, int l, int r)
     }
 }
 
-
-void TimSort(vi &a, int l, int r)
+void TimSort(vector<int> &a, int l, int r)
 {
     // r - включительно
     // int n = r - l + 1
@@ -53,9 +51,9 @@ void TimSort(vi &a, int l, int r)
                 i++;
             if (i - iter + 1 < minrun)
             {
-                InsertSort(a, iter, iter + minrun);
-                machine.AppendInQueue(MergeStruct(a, iter, iter + minrun));
-                iter += minrun + 1;
+                InsertSort(a, iter, iter + minrun - 1);
+                machine.AppendInQueue(MergeStruct(a, iter, iter + minrun - 1));
+                iter += minrun;
             } else
             {
                 // уже отсортирован, не надо ничего делать
@@ -70,8 +68,8 @@ void TimSort(vi &a, int l, int r)
             if (i - iter + 1 < minrun)
             {
                 InsertSort(a, iter, iter + minrun);
-                machine.AppendInQueue(MergeStruct(a, iter, iter + minrun));
-                iter += minrun + 1;
+                machine.AppendInQueue(MergeStruct(a, iter, iter + minrun - 1));
+                iter += minrun;
             } else
             {
                 // уже отсортирован, не надо ничего делать
@@ -91,6 +89,5 @@ void TimSort(vi &a, int l, int r)
         machine.AppendInQueue(MergeStruct(a, iter, r));
     }
 
-    vi b = machine.MergeLast();
-    a = b;
+    a = machine.MergeLast();
 }

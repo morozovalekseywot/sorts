@@ -3,4 +3,4 @@ project(sorts)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(sorts main.cpp Timsort.hpp MergeMachine.hpp my_sort.h)
+add_executable(sorts main.cpp Timsort.hpp MergeMachine.hpp my_sort.h MergeSort.h Sorts.h)

@@ -1,13 +1,6 @@
 #pragma once
 
-#include <vector>
-#include <iostream>
-#include <cmath>
-#include <algorithm>
-#include <cassert>
-
-using namespace std;
-#define vi vector <int>
+#include "Sorts.h"
 
 struct MergeStruct
 {
@@ -47,7 +40,7 @@ struct MergeMachine
         // (X > Y + Z) ^ (Y > Z)
         // Если одно из правил нарушается — массив Y сливается с меньшим из массивов X и Z
         // Повторяется до выполнения обоих правил или полного упорядочивания данных
-        while (size > 3)
+        while (size >= 3)
         {
             MergeStruct x = queue[size - 1], y = queue[size - 2], z = queue[size - 3];
             if (x.size <= y.size + z.size || y.size <= z.size)
@@ -55,11 +48,14 @@ struct MergeMachine
                 if (x.size < z.size)
                 {
                     size--;
+                    queue.pop_back();
                     queue[size - 1] = MergeStruct(Merge(x, y));
                 } else
                 {
                     size--;
-                    queue[size - 1] = MergeStruct(Merge(z, y));
+                    queue.pop_back();
+                    queue[size - 1] = x;
+                    queue[size - 2] = MergeStruct(Merge(z, y));
                 }
             } else
                 break;
@@ -73,21 +69,26 @@ struct MergeMachine
 
         while (i < a.size && j < b.size)
         {
-            if (a.vec[i] == a.vec[j])
+            if (a.vec[i] == b.vec[j])
             {
                 ans[size++] = a.vec[i];
+                ans[size++] = b.vec[j];
                 i++;
                 j++;
                 continue;
             }
-            while (i < a.size && a.vec[i] < a.vec[j])
+
+            while (i < a.size && a.vec[i] < b.vec[j])
             {
                 ans[size++] = a.vec[i++];
                 // галоп сюда
             }
-            while (j < b.size && a.vec[j] < a.vec[i])
+            if (i == a.size)
+                break;
+
+            while (j < b.size && b.vec[j] < a.vec[i])
             {
-                ans[size++] = a.vec[j++];
+                ans[size++] = b.vec[j++];
                 // галоп сюда
             }
         }
@@ -97,9 +98,9 @@ struct MergeMachine
         while (j < b.size)
             ans[size++] = b.vec[j++];
 
-        if (size == a.size + b.size)
+        if (size != a.size + b.size)
         {
-            cerr << "\n" << size << " != " << a.size << " + " << b.size << "\n";
+            cerr << "Error in function Merge\n" << size << " != " << a.size << " + " << b.size << "\n";
             throw runtime_error("Error in function Merge: size != a.size + b.size");
         }
 

@@ -1,12 +1,6 @@
 #include "my_sort.h"
 #include "Timsort.hpp"
-#include <ctime>
-#include <chrono>
 
-using namespace std;
-using namespace chrono;
-
-#define vi vector<int>
 #define all(v) v.begin(), v.end()
 #define vpii vector<pair<int, int>>
 #define CIN                           \
@@ -15,7 +9,7 @@ using namespace chrono;
     cout.tie(NULL)
 #define endl "\n"
 
-void TestSortFunc(string sortName, void sortFunc(vi &a, int l, int r), vi &a, int l, int r)
+void TestSortFunc(string sortName, void (*sortFunc)(vector<int> &, int, int), vector<int> &a, int l, int r)
 {
     vi b = a;
     auto begin = steady_clock::now();
@@ -43,4 +37,7 @@ int main()
         a[i] = rand() % INT32_MAX;
 
     TestSortFunc("Timsort", TimSort, a, 0, n - 1);
+    TestSortFunc("STLSort", STlSort, a, 0, n - 1);
+    TestSortFunc("MergeSort", MergeSort, a, 0, n - 1);
+    TestSortFunc("FastMergeSort", FastMergeSort, a, 0, n - 1);
 }
