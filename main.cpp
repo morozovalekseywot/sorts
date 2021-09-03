@@ -38,8 +38,10 @@ int main()
     for (int i = 0; i < n; ++i)
         a[i] = rand() % INT32_MAX;
 
-//    TestSortFunc("Timsort", TimSort, a, 0, n - 1);
-//    TestSortFunc("STLSort", STlSort, a, 0, n - 1);
-//    TestSortFunc("MergeSort", MergeSort, a, 0, n - 1);
+    TestSortFunc("Timsort", TimSort, a, 0, n - 1);
+    TestSortFunc("STLSort", STlSort, a, 0, n - 1);
+    TestSortFunc("MergeSort", MergeSort, a, 0, n - 1);
     TestSortFunc("FastMergeSort", FastMergeSort, a, 0, n - 1);
+    TestSortFunc("HoarSort", HoarSort, a, 0, n - 1);
+    TestSortFunc("InsertSort", InsertSort, a, 0, n - 1);
 }

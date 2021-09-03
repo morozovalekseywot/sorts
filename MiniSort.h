@@ -50,7 +50,6 @@ void InsertSort(vector<int> &a, int l, int r)
     }
 }
 
-// не работает пока что
 void HoarSort(vector<int> &a, int first, int last)
 {
     int med = a[(first + last) / 2], i = first, j = last;

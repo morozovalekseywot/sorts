@@ -51,7 +51,7 @@ void MergeSort(vector<int> &a, int l, int r)
     merge(a, l, med, r);
 }
 
-// не работает пока что
+
 void FastMergeSort(vector<int> &a, int left, int right)
 {
     for (int i = left; i < right; i += 2)
@@ -63,12 +63,12 @@ void FastMergeSort(vector<int> &a, int left, int right)
     int k, l;
     for (k = 4; k < right - left + 1; k *= 2)
     {
-        for (l = left; l + k / 2 < right; l += k)
+        for (l = left; l + k / 2 <= right; l += k)
             merge(a, l, l + k / 2 - 1, min(l + k - 1, right));
     }
 
     l = 0;
-    while (l < right && a[l] < a[l + 1])
+    while (l < right && a[l] <= a[l + 1])
         l++;
     merge(a, left, l, right);
 }

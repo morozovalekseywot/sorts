@@ -27,5 +27,8 @@ void TimSort(vi &a, int l, int r);
 /// Сортировка вставками
 void InsertSort(vi &a, int l, int r);
 
+/// Сортировка Хоара
+void HoarSort(vector<int> &a, int first, int last);
+
 /// Тест сортировок
 void TestSortFunc(string sortName, void sortFunc(vi &a, int l, int r), vi &a, int l, int r);
