@@ -10,7 +10,7 @@
 using namespace std;
 #define vi vector <int>
 
-int GetMinrun(int n)
+int getMinrun(int n)
 {
     int r = 0;           // станет 1 если среди сдвинутых битов будет хотя бы 1 ненулевой
     while (n >= 64)
@@ -21,12 +21,17 @@ int GetMinrun(int n)
     return n + r;
 }
 
+void subSort(vector<int> &a, int l, int r)
+{
+    HoarSort(a, l, r);
+}
+
 void TimSort(vector<int> &a, int l, int r)
 {
     // r - включительно
     // int n = r - l + 1
     int iter = l;
-    int minrun = GetMinrun(r - l + 1);
+    int minrun = getMinrun(r - l + 1);
     MergeMachine machine;
 
     // разбиение и сортировка
@@ -39,7 +44,7 @@ void TimSort(vector<int> &a, int l, int r)
                 i++;
             if (i - iter + 1 < minrun)
             {
-                InsertSort(a, iter, iter + minrun - 1);
+                subSort(a, iter, iter + minrun - 1);
                 machine.AppendInQueue(MergeStruct(a, iter, iter + minrun - 1));
                 iter += minrun;
             } else
@@ -55,7 +60,7 @@ void TimSort(vector<int> &a, int l, int r)
             reverse(a.begin() + iter, a.begin() + i);
             if (i - iter + 1 < minrun)
             {
-                InsertSort(a, iter, iter + minrun);
+                subSort(a, iter, iter + minrun);
                 machine.AppendInQueue(MergeStruct(a, iter, iter + minrun - 1));
                 iter += minrun;
             } else
@@ -73,7 +78,7 @@ void TimSort(vector<int> &a, int l, int r)
         while (i < r && a[i] > a[i + 1])
             i++;
         reverse(a.begin() + iter, a.begin() + i);
-        InsertSort(a, iter, r);
+        subSort(a, iter, r);
         machine.AppendInQueue(MergeStruct(a, iter, r));
     }
 

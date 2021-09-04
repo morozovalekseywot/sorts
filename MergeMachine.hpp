@@ -28,8 +28,12 @@ struct MergeMachine
 
     void AppendInQueue(const MergeStruct &elem)
     {
-        queue.emplace_back(elem);
-        size++;
+        if (queue.size() <= size)
+        {
+            queue.emplace_back(elem);
+            size++;
+        } else
+            queue[size++] = elem;
         CheckQueue();
     }
 
@@ -37,7 +41,7 @@ struct MergeMachine
     {
         if (size < 3)
             return;
-        // (X > Y + Z) ^ (Y > Z)
+        // (X > Y + Z) , (Y > Z)
         // Если одно из правил нарушается — массив Y сливается с меньшим из массивов X и Z
         // Повторяется до выполнения обоих правил или полного упорядочивания данных
         while (size >= 3)
@@ -48,21 +52,21 @@ struct MergeMachine
                 if (x.size < z.size)
                 {
                     size--;
-                    queue.pop_back();
-                    queue[size - 1] = MergeStruct(merge(x, y));
+                    //queue.pop_back();
+                    queue[size - 1] = MergeStruct(mergeV1(x, y));
                 } else
                 {
                     size--;
-                    queue.pop_back();
+                    //queue.pop_back();
                     queue[size - 1] = x;
-                    queue[size - 2] = MergeStruct(merge(z, y));
+                    queue[size - 2] = MergeStruct(mergeV1(z, y));
                 }
             } else
                 break;
         }
     }
 
-    static vi merge(const MergeStruct &a, const MergeStruct &b)
+    static vi mergeV1(const MergeStruct &a, const MergeStruct &b)
     {
         vi ans(a.size + b.size);
         int i = 0, j = 0, size = 0;
@@ -100,8 +104,35 @@ struct MergeMachine
 
         if (size != a.size + b.size)
         {
-            cerr << "Error in function merge\n" << size << " != " << a.size << " + " << b.size << "\n";
-            throw runtime_error("Error in function merge: size != a.size + b.size");
+            cerr << "Error in function mergeV1\n" << size << " != " << a.size << " + " << b.size << "\n";
+            throw runtime_error("Error in function mergeV1: size != a.size + b.size");
+        }
+
+        return ans;
+    }
+
+    static vi mergeV2(const MergeStruct &a, const MergeStruct &b)
+    {
+        vi ans(a.size + b.size);
+        int i = 0, j = 0, size = 0;
+
+        while (i < a.size && j < b.size)
+        {
+            if (a.vec[i] < b.vec[j])
+                ans[size++] = a.vec[i++];
+            else
+                ans[size++] = b.vec[j++];
+        }
+
+        while (i < a.size)
+            ans[size++] = a.vec[i++];
+        while (j < b.size)
+            ans[size++] = b.vec[j++];
+
+        if (size != a.size + b.size)
+        {
+            cerr << "Error in function mergeV2\n" << size << " != " << a.size << " + " << b.size << "\n";
+            throw runtime_error("Error in function mergeV2: size != a.size + b.size");
         }
 
         return ans;
@@ -117,6 +148,6 @@ struct MergeMachine
         }
         if (size == 1)
             return queue[0].vec;
-        return merge(queue[size - 1], queue[size - 2]);
+        return mergeV1(queue[size - 1], queue[size - 2]);
     }
 };
