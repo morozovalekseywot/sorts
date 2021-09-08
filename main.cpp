@@ -62,6 +62,15 @@ void BenchSortFunc(string sortName, void (*sortFunc)(vector<int> &, int, int), v
     file.close();
 }
 
+void Bench(vi &a, int n)
+{
+    BenchSortFunc("HoarSort", HoarSort, a, n);
+    BenchSortFunc("MergeSort", MergeSort, a, n);
+    BenchSortFunc("FastMergeSort", FastMergeSort, a, n);
+    BenchSortFunc("STLSort", STlSort, a, n);
+    BenchSortFunc("Timsort", TimSort, a, n);
+}
+
 int main()
 {
     int n;
@@ -70,10 +79,7 @@ int main()
     n = 100000;
     ArrayGenerator generator(n);
     vi a = generator.GenerateRandomArray();
-    BenchSortFunc("HoarSort", HoarSort, a, n);
-    BenchSortFunc("MergeSort", MergeSort, a, n);
-    BenchSortFunc("FastMergeSort", FastMergeSort, a, n);
-    BenchSortFunc("STLSort", STlSort, a, n);
+    Bench(a, n);
 
 //    TestSortFunc("Timsort", TimSort, a, 0, n - 1);
 //    TestSortFunc("STLSort", STlSort, a, 0, n - 1);
@@ -83,30 +89,5 @@ int main()
 //    TestSortFunc("InsertSort", InsertSort, a, 0, n - 1);
 //    TestSortFunc("InsertBinarySort", InsertBinarySort, a, 0, n - 1);
 //    TestSortFunc("CountSort", CountSort, a, 0, n - 1);
-
-    //cout << "\n\n";
-
-//    n = 100 * (n / 100);
-//    vi b(n);
-//    for (int i = 0; i < n; i += n / 100)
-//    {
-//        b[i] = rand() % INT16_MAX;
-//        if (b[i] % 2 == 0)
-//        {
-//            for (int j = i + 1; j < i + n / 100; j++)
-//                b[j] = b[j - 1] + rand() % INT8_MAX;
-//        } else
-//        {
-//            for (int j = i + 1; j < i + n / 100; j++)
-//                b[j] = b[j - 1] - rand() % INT8_MAX;
-//        }
-//    }
-//
-//    TestSortFunc("Timsort", TimSort, b, 0, n - 1);
-//    TestSortFunc("STLSort", STlSort, b, 0, n - 1);
-//    TestSortFunc("MergeSort", MergeSort, b, 0, n - 1);
-//    TestSortFunc("FastMergeSort", FastMergeSort, b, 0, n - 1);
-//    TestSortFunc("HoarSort", HoarSort, b, 0, n - 1);
-//    TestSortFunc("InsertSort", InsertSort, b, 0, n - 1);
 
 }

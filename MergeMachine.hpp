@@ -48,28 +48,22 @@ struct MergeMachine
         while (size >= 3)
         {
             MergeStruct x = queue[size - 3], y = queue[size - 2], z = queue[size - 1];
-            cout << x.size << " " << y.size << " " << z.size << "\n";
-            if (x.size <= y.size + z.size || y.size <= z.size)
-            {
-                if (x.size < z.size)
-                {
-                    size--;
-                    //queue.pop_back();
-                    cout << "Merge x and y " << x.size << " " << y.size << "\n";
-                    queue[size - 1] = z;
-                    queue[size - 2] = MergeStruct(mergeV1(x, y));
-                } else
-                {
-                    size--;
-                    //queue.pop_back();
-                    cout << "Merge y and z " << y.size << " " << z.size << "\n";
-//                    queue[size - 1] = x;
-                    queue[size - 1] = MergeStruct(mergeV1(z, y));
-                    if (queue[size - 1].size > queue[size - 2].size)
-                        swap(queue[size - 1], queue[size - 2]);
-                }
-            } else
+            // должно быть x.size>y.size>z.size
+            //cout << x.size << " " << y.size << " " << z.size << "\n";
+            if (x.size > y.size + z.size && y.size > z.size)
                 break;
+            if (x.size <= y.size + z.size)
+            {
+                size--;
+                //cout << "Merge x and y " << x.size << " " << y.size << "\n";
+                queue[size - 2] = MergeStruct(mergeV1(x, y));
+                queue[size - 1] = z;
+            } else
+            {
+                size--;
+                //cout << "Merge y and z " << y.size << " " << z.size << "\n";
+                queue[size - 1] = MergeStruct(mergeV1(z, y));
+            }
         }
     }
 
@@ -149,10 +143,15 @@ struct MergeMachine
     /// merge last and return sorted vector
     vi MergeLast()
     {
-        if (size > 2 || size <= 0)
+        if (size > 2)
         {
-            cerr << "\nPrivate size of queue: " << queue.size() << "\nPublic size of queue: " << size << "\n";
-            throw runtime_error("Size of MergeMachine.queue >= 2");
+            while (size >= 3)
+            {
+                queue[size - 2] = MergeStruct(mergeV1(queue[size - 1], queue[size - 2]));
+                size--;
+            }
+//            cerr << "\nPrivate size of queue: " << queue.size() << "\nPublic size of queue: " << size << "\n";
+//            throw runtime_error("Size of MergeMachine.queue >= 2");
         }
         if (size == 1)
             return queue[0].vec;
