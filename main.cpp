@@ -1,7 +1,7 @@
 #include "MiniSort.h"
 #include "Timsort.hpp"
 #include "MergeSort.h"
-#include "MiniSort.h"
+#include "generate.h"
 
 #define all(v) v.begin(), v.end()
 #define vpii vector<pair<int, int>>
@@ -34,16 +34,18 @@ int main()
     int n;
     //srand(time(NULL));
     cin >> n;
-    vi a(n);
-    for (int i = 0; i < n; ++i)
-        a[i] = rand() % INT32_MAX;
+    ArrayGenerator generator(n);
+    vi a = generator.GenerateRandomArray();
 
     TestSortFunc("Timsort", TimSort, a, 0, n - 1);
-    TestSortFunc("STLSort", STlSort, a, 0, n - 1);
-    TestSortFunc("MergeSort", MergeSort, a, 0, n - 1);
-    TestSortFunc("FastMergeSort", FastMergeSort, a, 0, n - 1);
-    TestSortFunc("HoarSort", HoarSort, a, 0, n - 1);
-    TestSortFunc("InsertSort", InsertSort, a, 0, n - 1);
+//    TestSortFunc("STLSort", STlSort, a, 0, n - 1);
+//    TestSortFunc("MergeSort", MergeSort, a, 0, n - 1);
+//    TestSortFunc("FastMergeSort", FastMergeSort, a, 0, n - 1);
+//    TestSortFunc("HoarSort", HoarSort, a, 0, n - 1);
+//    TestSortFunc("InsertSort", InsertSort, a, 0, n - 1);
+//    TestSortFunc("InsertBinarySort", InsertBinarySort, a, 0, n - 1);
+//    TestSortFunc("CountSort", CountSort, a, 0, n - 1);
+
     cout << "\n\n";
 
 //    n = 100 * (n / 100);

@@ -14,7 +14,7 @@ using namespace chrono;
 #define vi vector <int>
 
 /// Сортировка подсчётом
-void CountSort(vector<int> &vec, int l, int r);
+void CountSort(vector<int> &a, int l, int r);
 
 /// Сортировка слиянием с рекурсией
 void MergeSort(vector<int> &a, int l, int r);
@@ -26,6 +26,9 @@ void TimSort(vi &a, int l, int r);
 
 /// Сортировка вставками
 void InsertSort(vi &a, int l, int r);
+
+/// Сортировка двоичными вставками
+void InsertBinarySort(vector<int> &a, int l, int r);
 
 /// Сортировка Хоара
 void HoarSort(vector<int> &a, int first, int last);

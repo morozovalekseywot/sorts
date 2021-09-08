@@ -23,7 +23,7 @@ int getMinrun(int n)
 
 void subSort(vector<int> &a, int l, int r)
 {
-    HoarSort(a, l, r);
+    InsertBinarySort(a, l, r);
 }
 
 void TimSort(vector<int> &a, int l, int r)

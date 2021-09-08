@@ -51,7 +51,6 @@ void MergeSort(vector<int> &a, int l, int r)
     merge(a, l, med, r);
 }
 
-
 void FastMergeSort(vector<int> &a, int left, int right)
 {
     for (int i = left; i < right; i += 2)

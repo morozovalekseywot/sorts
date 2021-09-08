@@ -44,22 +44,29 @@ struct MergeMachine
         // (X > Y + Z) , (Y > Z)
         // Если одно из правил нарушается — массив Y сливается с меньшим из массивов X и Z
         // Повторяется до выполнения обоих правил или полного упорядочивания данных
+        // чем меньше индекс тем больше размер
         while (size >= 3)
         {
-            MergeStruct x = queue[size - 1], y = queue[size - 2], z = queue[size - 3];
+            MergeStruct x = queue[size - 3], y = queue[size - 2], z = queue[size - 1];
+            cout << x.size << " " << y.size << " " << z.size << "\n";
             if (x.size <= y.size + z.size || y.size <= z.size)
             {
                 if (x.size < z.size)
                 {
                     size--;
                     //queue.pop_back();
-                    queue[size - 1] = MergeStruct(mergeV1(x, y));
+                    cout << "Merge x and y " << x.size << " " << y.size << "\n";
+                    queue[size - 1] = z;
+                    queue[size - 2] = MergeStruct(mergeV1(x, y));
                 } else
                 {
                     size--;
                     //queue.pop_back();
-                    queue[size - 1] = x;
-                    queue[size - 2] = MergeStruct(mergeV1(z, y));
+                    cout << "Merge y and z " << y.size << " " << z.size << "\n";
+//                    queue[size - 1] = x;
+                    queue[size - 1] = MergeStruct(mergeV1(z, y));
+                    if (queue[size - 1].size > queue[size - 2].size)
+                        swap(queue[size - 1], queue[size - 2]);
                 }
             } else
                 break;
@@ -68,6 +75,7 @@ struct MergeMachine
 
     static vi mergeV1(const MergeStruct &a, const MergeStruct &b)
     {
+        //cout << a.size << " " << b.size << "\n";
         vi ans(a.size + b.size);
         int i = 0, j = 0, size = 0;
 
