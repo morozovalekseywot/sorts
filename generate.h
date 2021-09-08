@@ -24,6 +24,7 @@ struct ArrayGenerator
         for (int i = 0; i < n; ++i)
             a[i] = rand() % INT32_MAX;
 
+        sort(a.begin(), a.end());
         return a;
     }
 
