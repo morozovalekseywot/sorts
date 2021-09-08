@@ -23,7 +23,9 @@ int getMinrun(int n)
 
 void subSort(vector<int> &a, int l, int r)
 {
+    //InsertSort(a, l, r);
     InsertBinarySort(a, l, r);
+    //STlSort(a, l, r);
 }
 
 void TimSort(vector<int> &a, int l, int r)
@@ -51,13 +53,14 @@ void TimSort(vector<int> &a, int l, int r)
             {
                 // уже отсортирован, не надо ничего делать
                 machine.AppendInQueue(MergeStruct(a, iter, i));
+                assert(is_sorted(a.begin() + iter, a.begin() + i + 1));
                 iter = i + 1;
             }
         } else // Строгое убывание
         {
             while (i < r && a[i] > a[i + 1])
                 i++;
-            reverse(a.begin() + iter, a.begin() + i);
+            reverse(a.begin() + iter, a.begin() + i + 1);
             if (i - iter + 1 < minrun)
             {
                 subSort(a, iter, iter + minrun);
@@ -67,6 +70,7 @@ void TimSort(vector<int> &a, int l, int r)
             {
                 // уже отсортирован, не надо ничего делать
                 machine.AppendInQueue(MergeStruct(a, iter, i));
+                assert(is_sorted(a.begin() + iter, a.begin() + i + 1));
                 iter = i + 1;
             }
         }
