@@ -43,7 +43,7 @@ void TestSortFunc(string sortName, void (*sortFunc)(vector<int> &, int, int), ve
 
 void BenchSortFunc(string sortName, void (*sortFunc)(vector<int> &, int, int), vector<int> &a, int n)
 {
-    string path = "../graphics/real/";
+    string path = "../graphics/random/";
     path.append(sortName.begin(), sortName.end());
     path.append(".txt");
     ofstream file(path, ios_base::trunc);
@@ -102,15 +102,15 @@ int main()
     int n;
     srand(time(NULL));
     //cin >> n;
-    n = 100000;
+    n = 1000000;
     ArrayGenerator generator(n);
     vi randomArray = generator.GenerateRandomArray();
     vi sortArray = generator.GenerateSortedArray();
     vi reverseArray = generator.GenerateReverseArray();
     vi realArray = generator.GenerateRealArray();
 
-    Bench(realArray, n);
-    Bench2(realArray, n / 50);
+    Bench(randomArray, n);
+    Bench2(randomArray, n / 50);
 
 //    TestSortFunc("Timsort", TimSort, realArray, 0, n - 1);
 //    TestSortFunc("STLSort", STlSort, randomArray, 0, n - 1);
