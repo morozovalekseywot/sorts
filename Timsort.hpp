@@ -8,7 +8,6 @@
 #include "MergeMachine.hpp"
 
 using namespace std;
-#define vi vector <int>
 
 int getMinrun(int n)
 {
@@ -21,20 +20,22 @@ int getMinrun(int n)
     return n + r;
 }
 
-void subSort(vector<int> &a, int l, int r)
+template<typename T>
+void subSort(vector<T> &a, int l, int r)
 {
     //InsertSort(a, l, r);
     InsertBinarySort(a, l, r);
     //STlSort(a, l, r);
 }
 
-void TimSort(vector<int> &a, int l, int r)
+template<typename T>
+void TimSort(vector<T> &a, int l, int r)
 {
     // r - включительно
     // int n = r - l + 1
     int iter = l;
     int minrun = getMinrun(r - l + 1);
-    MergeMachine machine;
+    MergeMachine<T> machine;
 
     // разбиение и сортировка
     while (iter < r - minrun)
@@ -53,7 +54,7 @@ void TimSort(vector<int> &a, int l, int r)
             {
                 // уже отсортирован, не надо ничего делать
                 machine.AppendInQueue(MergeStruct(a, iter, i));
-                assert(is_sorted(a.begin() + iter, a.begin() + i + 1));
+                //assert(is_sorted(a.begin() + iter, a.begin() + i + 1));
                 iter = i + 1;
             }
         } else // Строгое убывание
@@ -70,7 +71,7 @@ void TimSort(vector<int> &a, int l, int r)
             {
                 // уже отсортирован, не надо ничего делать
                 machine.AppendInQueue(MergeStruct(a, iter, i));
-                assert(is_sorted(a.begin() + iter, a.begin() + i + 1));
+                //assert(is_sorted(a.begin() + iter, a.begin() + i + 1));
                 iter = i + 1;
             }
         }

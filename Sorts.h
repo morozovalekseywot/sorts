@@ -11,27 +11,36 @@
 using namespace std;
 using namespace chrono;
 
-#define vi vector <int>
+#define vt vector <T>
+#define vi vector<int>
 
 /// Сортировка подсчётом
-void CountSort(vector<int> &a, int l, int r);
+template<typename T>
+void CountSort(vector<T> &a, int l, int r);
 
 /// Сортировка слиянием с рекурсией
-void MergeSort(vector<int> &a, int l, int r);
+template<typename T>
+void MergeSort(vector<T> &a, int l, int r);
 
 /// Сортировка слиянем без рекурсии
-void FastMergeSort(vector<int> &a, int left, int right);
+template<typename T>
+void FastMergeSort(vector<T> &a, int left, int right);
 
-void TimSort(vi &a, int l, int r);
+template<typename T>
+void TimSort(vt &a, int l, int r);
 
 /// Сортировка вставками
-void InsertSort(vi &a, int l, int r);
+template<typename T>
+void InsertSort(vt &a, int l, int r);
 
 /// Сортировка двоичными вставками
-void InsertBinarySort(vector<int> &a, int l, int r);
+template<typename T>
+void InsertBinarySort(vector<T> &a, int l, int r);
 
 /// Сортировка Хоара
-void HoarSort(vector<int> &a, int first, int last);
+template<typename T>
+void HoarSort(vector<T> &a, int first, int last);
 
 /// Тест сортировок
-void TestSortFunc(string sortName, void sortFunc(vi &a, int l, int r), vi &a, int l, int r);
+template<typename T>
+void TestSortFunc(string sortName, void sortFunc(vt &a, int l, int r), vt &a, int l, int r);

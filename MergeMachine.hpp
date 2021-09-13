@@ -2,17 +2,18 @@
 
 #include "Sorts.h"
 
+template<typename T>
 struct MergeStruct
 {
-    vi vec;
+    vt vec;
     int left; // левая граница в исходном массиве
     int right; // правая граница в исходном массиве, включительно
     int size; // размер
 
-    explicit MergeStruct(const vi &vec) : vec(vec), left(-1), right(-1), size(vec.size())
+    explicit MergeStruct(const vt &vec) : vec(vec), left(-1), right(-1), size(vec.size())
     {}
 
-    MergeStruct(const vi &a, int left, int right) : left(left), right(right)
+    MergeStruct(const vt &a, int left, int right) : left(left), right(right)
     {
         size = right - left + 1;
         vec.resize(size);
@@ -21,12 +22,13 @@ struct MergeStruct
     }
 };
 
+template<typename T>
 struct MergeMachine
 {
-    vector<MergeStruct> queue;
+    vector<MergeStruct<T>> queue;
     int size = 0;
 
-    void AppendInQueue(const MergeStruct &elem)
+    void AppendInQueue(const MergeStruct<T> &elem)
     {
         if (queue.size() <= size)
         {
@@ -67,10 +69,10 @@ struct MergeMachine
         }
     }
 
-    static vi mergeV1(const MergeStruct &a, const MergeStruct &b)
+    static vector<T> mergeV1(const MergeStruct<T> &a, const MergeStruct<T> &b)
     {
         //cout << a.size << " " << b.size << "\n";
-        vi ans(a.size + b.size);
+        vector<T> ans(a.size + b.size);
         int i = 0, j = 0, size = 0;
 
         while (i < a.size && j < b.size)
@@ -113,9 +115,9 @@ struct MergeMachine
         return ans;
     }
 
-    static vi mergeV2(const MergeStruct &a, const MergeStruct &b)
+    static vector<T> mergeV2(const MergeStruct<T> &a, const MergeStruct<T> &b)
     {
-        vi ans(a.size + b.size);
+        vector<T> ans(a.size + b.size);
         int i = 0, j = 0, size = 0;
 
         while (i < a.size && j < b.size)
@@ -141,7 +143,7 @@ struct MergeMachine
     }
 
     /// merge last and return sorted vector
-    vi MergeLast()
+    vector<T> MergeLast()
     {
         if (size > 2)
         {

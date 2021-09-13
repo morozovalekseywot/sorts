@@ -45,11 +45,8 @@ struct ArrayGenerator
 
     [[nodiscard]] vi GenerateReverseArray() const
     {
-        vi a(n);
-        a[0] = INT32_MAX / 10;
-        for (int i = 1; i < n; ++i)
-            a[i] = a[i - 1] - rand() % INT16_MAX;
-
+        vi a = GenerateSortedArray();
+        reverse(a.begin(), a.end());
         return a;
     }
 
@@ -60,14 +57,25 @@ struct ArrayGenerator
         {
             int k = min(i + (rand() % n) / 10, n);
             sort(a.begin() + i, a.begin() + k);
-//            int count_of_swap = rand() % (k / 4);
-//            for (int j = 0; j < count_of_swap; j++)
-//            {
-//                swap(a[i + rand() % (k - i)], a[i + rand() % (k - i)]);
-//            }
             if (k % 2 == 0)
                 reverse(a.begin() + i, a.begin() + k);
-            i += k - 1;
+            i += k - 1 + rand() % k;
+        }
+
+        return a;
+    }
+
+    [[nodiscard]] vi GenerateSwapArray() const
+    {
+        random_device rd;
+        mt19937 mersenne(rd());
+
+        vi a = GenerateSortedArray();
+        int count_of_swap = n / 20 + mersenne() % (n / 20);
+
+        for (int i = 0; i < count_of_swap; i++)
+        {
+            swap(a[mersenne() % (n / 2)], a[n / 2 + mersenne() % (n / 2)]);
         }
 
         return a;

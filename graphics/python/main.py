@@ -2,7 +2,7 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 
-direct = "real"
+direct = "swap"
 dir_path = "../" + direct
 # graph_path = "graphics"
 

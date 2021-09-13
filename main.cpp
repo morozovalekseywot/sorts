@@ -1,22 +1,25 @@
 #include "MiniSort.h"
 #include "Timsort.hpp"
 #include "MergeSort.h"
+#include "ISorter.h"
+//#include "C:\Users\Diablo\CLionProjects\Cstring\Sequence.hpp"
+//#include "C:\Users\Diablo\CLionProjects\Cstring\Array_Sequence.hpp"
+//#include "C:\Users\Diablo\CLionProjects\Cstring\Linked_List_Sequence.hpp"
 #include "generate.h"
 #include <fstream>
 #include <cstdlib>
 #include <iomanip>
 
-#define all(v) v.begin(), v.end()
-#define vpii vector<pair<int, int>>
+
 #define CIN                           \
     ios_base::sync_with_stdio(false); \
     cin.tie(NULL);                    \
     cout.tie(NULL)
-#define endl "\n"
 
-void TestSortFunc(string sortName, void (*sortFunc)(vector<int> &, int, int), vector<int> &a, int l, int r)
+template<typename T>
+void TestSortFunc(string sortName, void (*sortFunc)(vector<T> &, int, int), vector<T> &a, int l, int r)
 {
-    vi b = a;
+    vt b = a;
     auto begin = steady_clock::now();
     sortFunc(b, l, r);
     auto end = steady_clock::now();
@@ -41,16 +44,17 @@ void TestSortFunc(string sortName, void (*sortFunc)(vector<int> &, int, int), ve
     cout << sortName << "\n--- " << time.count() / 1e3 << " microseconds ---\n";
 }
 
-void BenchSortFunc(string sortName, void (*sortFunc)(vector<int> &, int, int), vector<int> &a, int n)
+template<typename T>
+void BenchSortFunc(string path, string sortName, void (*sortFunc)(vector<T> &, int, int), vector<T> &a, int n)
 {
-    string path = "../graphics/random/";
+//    string path = "../graphics/real/";
     path.append(sortName.begin(), sortName.end());
     path.append(".txt");
     ofstream file(path, ios_base::trunc);
 
     for (int i = n / 100; i <= n; i += n / 100)
     {
-        vi b(a.begin(), a.begin() + i);
+        vector<T> b(a.begin(), a.begin() + i);
 
         auto begin = steady_clock::now();
         sortFunc(b, 0, i - 1);
@@ -81,20 +85,22 @@ void BenchSortFunc(string sortName, void (*sortFunc)(vector<int> &, int, int), v
     file.close();
 }
 
-void Bench(vi &a, int n)
+template<typename T>
+void Bench(string path, vt &a, int n)
 {
-    BenchSortFunc("HoarSort", HoarSort, a, n);
-    BenchSortFunc("MergeSort", MergeSort, a, n);
-    BenchSortFunc("FastMergeSort", FastMergeSort, a, n);
-    BenchSortFunc("STLSort", STlSort, a, n);
-    BenchSortFunc("Timsort", TimSort, a, n);
+    BenchSortFunc(path, "Timsort", TimSort, a, n);
+    BenchSortFunc(path, "HoarSort", HoarSort, a, n);
+    BenchSortFunc(path, "MergeSort", MergeSort, a, n);
+    BenchSortFunc(path, "FastMergeSort", FastMergeSort, a, n);
+    BenchSortFunc(path, "STLSort", STlSort, a, n);
 //    BenchSortFunc("CountSort", CountSort, a, n);
 }
 
-void Bench2(vi &a, int n)
+template<typename T>
+void Bench2(string path, vt &a, int n)
 {
-    BenchSortFunc("InsertBinarySort", InsertBinarySort, a, n);
-    BenchSortFunc("InsertSort", InsertSort, a, n);
+    BenchSortFunc(path, "InsertBinarySort", InsertBinarySort, a, n);
+    BenchSortFunc(path, "InsertSort", InsertSort, a, n);
 }
 
 int main()
@@ -105,12 +111,24 @@ int main()
     n = 1000000;
     ArrayGenerator generator(n);
     vi randomArray = generator.GenerateRandomArray();
-    vi sortArray = generator.GenerateSortedArray();
+    vi sortedArray = generator.GenerateSortedArray();
     vi reverseArray = generator.GenerateReverseArray();
     vi realArray = generator.GenerateRealArray();
+    vi swapArray = generator.GenerateSwapArray();
 
-    Bench(randomArray, n);
-    Bench2(randomArray, n / 50);
+    string pathRandom = "../graphics/random/";
+    string pathSorted = "../graphics/sorted/";
+    string pathReverse = "../graphics/reverse/";
+    string pathReal = "../graphics/real/";
+    string pathSwap = "../graphics/swap/";
+
+    Bench(pathRandom, randomArray, n);
+    //Bench(pathSorted, sortedArray, n);
+    //Bench(pathReverse, reverseArray, n);
+    Bench(pathReal, realArray, n);
+    Bench(pathSwap, swapArray, n);
+
+//    Bench2(pathRandom, randomArray, n / 50);
 
 //    TestSortFunc("Timsort", TimSort, realArray, 0, n - 1);
 //    TestSortFunc("STLSort", STlSort, randomArray, 0, n - 1);

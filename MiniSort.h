@@ -3,12 +3,14 @@
 #include "Sorts.h"
 
 // library sort, r включительно
-void STlSort(vector<int> &a, int left, int right)
+template<typename T>
+void STlSort(vector<T> &a, int left, int right)
 {
     sort(a.begin() + left, a.begin() + right + 1);
 }
 
-void CountSort(vector<int> &a, int l, int r)
+template<typename T>
+void CountSort(vector<T> &a, int l, int r)
 {
     // нахождение интервала чисел
     int max = a[l], min = a[l];
@@ -20,7 +22,7 @@ void CountSort(vector<int> &a, int l, int r)
             min = a[i];
     }
 
-    vi counts(max - min + 1, 0);
+    vt counts(max - min + 1, 0);
 
     for (int elem: a)
         counts[elem - min]++;
@@ -34,7 +36,8 @@ void CountSort(vector<int> &a, int l, int r)
     assert(index == r + 1);
 }
 
-void InsertBinarySort(vector<int> &a, int l, int r)
+template<typename T>
+void InsertBinarySort(vector<T> &a, int l, int r)
 {
     // r - включительно
     for (int i = l + 1; i <= r; i++)
@@ -46,7 +49,8 @@ void InsertBinarySort(vector<int> &a, int l, int r)
     }
 }
 
-void InsertSort(vector<int> &a, int l, int r)
+template<typename T>
+void InsertSort(vector<T> &a, int l, int r)
 {
     // r - включительно
     for (int i = l + 1; i <= r; i++)
@@ -60,7 +64,8 @@ void InsertSort(vector<int> &a, int l, int r)
     }
 }
 
-void HoarSort(vector<int> &a, int first, int last)
+template<typename T>
+void HoarSort(vector<T> &a, int first, int last)
 {
     int med = a[(first + last) / 2], i = first, j = last;
     while (i <= j)

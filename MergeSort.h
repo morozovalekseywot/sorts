@@ -3,10 +3,11 @@
 #include "Sorts.h"
 
 /// слияние двух отсортированных частей массива: [l,med]+[med+1,r]
-void merge(vi &a, int l, int med, int r)
+template<typename T>
+void merge(vector<T> &a, int l, int med, int r)
 {
     int i = l, j = med + 1, size = 0;
-    vi ans(r - l + 1);
+    vector<T> ans(r - l + 1);
     while (i <= med && j <= r)
     {
         if (a[i] < a[j])
@@ -41,7 +42,8 @@ void merge(vi &a, int l, int med, int r)
         a[i] = ans[size++];
 }
 
-void MergeSort(vector<int> &a, int l, int r)
+template<typename T>
+void MergeSort(vector<T> &a, int l, int r)
 {
     if (l >= r)
         return;
@@ -51,7 +53,8 @@ void MergeSort(vector<int> &a, int l, int r)
     merge(a, l, med, r);
 }
 
-void FastMergeSort(vector<int> &a, int left, int right)
+template<typename T>
+void FastMergeSort(vector<T> &a, int left, int right)
 {
     for (int i = left; i < right; i += 2)
     {
