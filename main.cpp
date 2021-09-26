@@ -8,7 +8,6 @@
 #include "generate.h"
 #include <fstream>
 #include <cstdlib>
-#include <iomanip>
 
 
 #define CIN                           \
@@ -52,7 +51,7 @@ void BenchSortFunc(string path, string sortName, void (*sortFunc)(vector<T> &, i
     path.append(".txt");
     ofstream file(path, ios_base::trunc);
 
-    for (int i = n / 100; i <= n; i += n / 100)
+    for (int i = n / 200; i <= n; i += n / 200)
     {
         vector<T> b(a.begin(), a.begin() + i);
 
@@ -113,24 +112,20 @@ int main()
     vi randomArray = generator.GenerateRandomArray();
     vi sortedArray = generator.GenerateSortedArray();
     vi reverseArray = generator.GenerateReverseArray();
-    vi realArray = generator.GenerateRealArray();
     vi swapArray = generator.GenerateSwapArray();
 
     string pathRandom = "../graphics/random/";
     string pathSorted = "../graphics/sorted/";
     string pathReverse = "../graphics/reverse/";
-    string pathReal = "../graphics/real/";
     string pathSwap = "../graphics/swap/";
 
     Bench(pathRandom, randomArray, n);
-    //Bench(pathSorted, sortedArray, n);
-    //Bench(pathReverse, reverseArray, n);
-    Bench(pathReal, realArray, n);
+    Bench(pathSorted, sortedArray, n);
+    Bench(pathReverse, reverseArray, n);
     Bench(pathSwap, swapArray, n);
 
-//    Bench2(pathRandom, randomArray, n / 50);
+    Bench2(pathRandom, randomArray, n / 50);
 
-//    TestSortFunc("Timsort", TimSort, realArray, 0, n - 1);
 //    TestSortFunc("STLSort", STlSort, randomArray, 0, n - 1);
 //    TestSortFunc("MergeSort", MergeSort, randomArray, 0, n - 1);
 //    TestSortFunc("FastMergeSort", FastMergeSort, randomArray, 0, n - 1);

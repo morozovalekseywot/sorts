@@ -2,14 +2,14 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 
-direct = "reverse"
+direct = "random"
 dir_path = "../" + direct
 # graph_path = "graphics"
 
 plt.rcParams['figure.figsize'] = (10, 7)
 
 for file_path in os.listdir(dir_path):
-    if file_path == "InsertSort.txt" or file_path == "InsertBinarySort.txt":
+    if file_path != "InsertSort.txt" and file_path != "InsertBinarySort.txt":
         continue
     file_name = file_path[:-4]
 
@@ -48,4 +48,4 @@ for file_path in os.listdir(dir_path):
 plt.legend()
 # plt.show()
 plt.grid()
-plt.savefig(f"graphics_{direct}.png")
+plt.savefig(f"graphics_insert_sort_{direct}.png")

@@ -3,8 +3,9 @@
 #include "Sorts.h"
 #include <random>
 
-struct ArrayGenerator
+class ArrayGenerator
 {
+public:
     int n;
 
     explicit ArrayGenerator(int n) : n(n)
@@ -47,21 +48,6 @@ struct ArrayGenerator
     {
         vi a = GenerateSortedArray();
         reverse(a.begin(), a.end());
-        return a;
-    }
-
-    [[nodiscard]] vi GenerateRealArray() const
-    {
-        vi a = GenerateRandomArray();
-        for (int i = 0; i < n; i++)
-        {
-            int k = min(i + (rand() % n) / 10, n);
-            sort(a.begin() + i, a.begin() + k);
-            if (k % 2 == 0)
-                reverse(a.begin() + i, a.begin() + k);
-            i += k - 1 + rand() % k;
-        }
-
         return a;
     }
 

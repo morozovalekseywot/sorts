@@ -9,8 +9,7 @@ void STlSort(vector<T> &a, int left, int right)
     sort(a.begin() + left, a.begin() + right + 1);
 }
 
-template<typename T>
-void CountSort(vector<T> &a, int l, int r)
+void CountSort(vector<int> &a, int l, int r)
 {
     // нахождение интервала чисел
     int max = a[l], min = a[l];
@@ -22,7 +21,7 @@ void CountSort(vector<T> &a, int l, int r)
             min = a[i];
     }
 
-    vt counts(max - min + 1, 0);
+    vi counts(max - min + 1, 0);
 
     for (int elem: a)
         counts[elem - min]++;

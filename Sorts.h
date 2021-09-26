@@ -15,8 +15,7 @@ using namespace chrono;
 #define vi vector<int>
 
 /// Сортировка подсчётом
-template<typename T>
-void CountSort(vector<T> &a, int l, int r);
+void CountSort(vector<int> &a, int l, int r);
 
 /// Сортировка слиянием с рекурсией
 template<typename T>

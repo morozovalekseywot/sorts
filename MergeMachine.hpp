@@ -6,28 +6,25 @@ template<typename T>
 struct MergeStruct
 {
     vt vec;
-    int left; // левая граница в исходном массиве
-    int right; // правая граница в исходном массиве, включительно
-    int size; // размер
+    int size;
 
-    explicit MergeStruct(const vt &vec) : vec(vec), left(-1), right(-1), size(vec.size())
+    explicit MergeStruct(const vt &vec) : vec(vec), size(vec.size())
     {}
 
-    MergeStruct(const vt &a, int left, int right) : left(left), right(right)
+    MergeStruct(const vt &a, int left, int right)
     {
+        vec = vector<T>(a.begin() + left, a.begin() + right + 1);
         size = right - left + 1;
-        vec.resize(size);
-        for (int i = left; i <= right; i++)
-            vec[i - left] = a[i];
     }
 };
 
 template<typename T>
-struct MergeMachine
+class MergeMachine
 {
+private:
     vector<MergeStruct<T>> queue;
     int size = 0;
-
+public:
     void AppendInQueue(const MergeStruct<T> &elem)
     {
         if (queue.size() <= size)
@@ -47,7 +44,7 @@ struct MergeMachine
         // Если одно из правил нарушается — массив Y сливается с меньшим из массивов X и Z
         // Повторяется до выполнения обоих правил или полного упорядочивания данных
         // чем меньше индекс тем больше размер
-        while (size >= 3)
+        while (size > 2)
         {
             MergeStruct x = queue[size - 3], y = queue[size - 2], z = queue[size - 1];
             // должно быть x.size>y.size>z.size
@@ -152,11 +149,11 @@ struct MergeMachine
                 queue[size - 2] = MergeStruct(mergeV1(queue[size - 1], queue[size - 2]));
                 size--;
             }
-//            cerr << "\nPrivate size of queue: " << queue.size() << "\nPublic size of queue: " << size << "\n";
-//            throw runtime_error("Size of MergeMachine.queue >= 2");
         }
+
         if (size == 1)
             return queue[0].vec;
+
         return mergeV1(queue[size - 1], queue[size - 2]);
     }
 };

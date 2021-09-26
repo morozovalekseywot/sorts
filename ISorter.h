@@ -2,16 +2,16 @@
 
 #include "Sorts.h"
 
-template<class data>
+template<typename T, class data>
 concept arr =
 requires(data &seq){
-    seq.getLength() != 0;
+    seq.getLength();
     swappable<data>;
-    equality_comparable<data[0]>;
+    equality_comparable<T>;
 };
 
 template<typename T, class data>
-requires arr<data>
+requires arr<T, data>
 class ISorter
 {
 public:
@@ -19,14 +19,14 @@ public:
     {
         if (right < left || left < 0 || right >= seq.getLength())
             throw out_of_range("right < left in function CountSortSequence");
-        vector<T> a(right - left + 1);
+        vector<int> a(right - left + 1);
         for (int i = left; i <= right; i++)
-            a[i - left] = seq[i];
+            a[i - left] = static_cast<int>(seq[i]);
 
         CountSort(a, 0, right - left + 1);
 
         for (int i = left; i <= right; i++)
-            seq[i] = a[i - left];
+            seq[i] = static_cast<T>(a[i - left]);
     }
 
     void MergeSortSequence(data &seq, int left, int right)
