@@ -11,7 +11,6 @@
 using namespace std;
 using namespace chrono;
 
-#define vt vector <T>
 #define vi vector<int>
 
 /// Сортировка подсчётом
@@ -26,11 +25,11 @@ template<typename T>
 void FastMergeSort(vector<T> &a, int left, int right);
 
 template<typename T>
-void TimSort(vt &a, int l, int r);
+void TimSort(vector <T> &a, int l, int r);
 
 /// Сортировка вставками
 template<typename T>
-void InsertSort(vt &a, int l, int r);
+void InsertSort(vector <T> &a, int l, int r);
 
 /// Сортировка двоичными вставками
 template<typename T>
@@ -42,4 +41,11 @@ void HoarSort(vector<T> &a, int first, int last);
 
 /// Тест сортировок
 template<typename T>
-void TestSortFunc(string sortName, void sortFunc(vt &a, int l, int r), vt &a, int l, int r);
+void TestSortFunc(string sortName, void sortFunc(vector <T> &a, int l, int r), vector <T> &a, int l, int r);
+
+/// Библиотечная сортировка, r включительно
+template<typename T>
+void STlSort(vector<T> &a, int left, int right)
+{
+    sort(a.begin() + left, a.begin() + right + 1);
+}

@@ -5,13 +5,13 @@
 template<typename T>
 struct MergeStruct
 {
-    vt vec;
+    vector <T> vec;
     int size;
 
-    explicit MergeStruct(const vt &vec) : vec(vec), size(vec.size())
+    explicit MergeStruct(const vector <T> &vec) : vec(vec), size(vec.size())
     {}
 
-    MergeStruct(const vt &a, int left, int right)
+    MergeStruct(const vector <T> &a, int left, int right)
     {
         vec = vector<T>(a.begin() + left, a.begin() + right + 1);
         size = right - left + 1;

@@ -1,10 +1,9 @@
-#include "MiniSort.h"
+#include "InsertSort.h"
 #include "Timsort.hpp"
 #include "MergeSort.h"
+#include "CountSort.hpp"
+#include "HoarSort.hpp"
 #include "ISorter.h"
-//#include "C:\Users\Diablo\CLionProjects\Cstring\Sequence.hpp"
-//#include "C:\Users\Diablo\CLionProjects\Cstring\Array_Sequence.hpp"
-//#include "C:\Users\Diablo\CLionProjects\Cstring\Linked_List_Sequence.hpp"
 #include "generate.h"
 #include <fstream>
 #include <cstdlib>
@@ -18,7 +17,7 @@
 template<typename T>
 void TestSortFunc(string sortName, void (*sortFunc)(vector<T> &, int, int), vector<T> &a, int l, int r)
 {
-    vt b = a;
+    vector <T> b = a;
     auto begin = steady_clock::now();
     sortFunc(b, l, r);
     auto end = steady_clock::now();
@@ -85,7 +84,7 @@ void BenchSortFunc(string path, string sortName, void (*sortFunc)(vector<T> &, i
 }
 
 template<typename T>
-void Bench(string path, vt &a, int n)
+void Bench(string path, vector <T> &a, int n)
 {
     BenchSortFunc(path, "Timsort", TimSort, a, n);
     BenchSortFunc(path, "HoarSort", HoarSort, a, n);
@@ -96,7 +95,7 @@ void Bench(string path, vt &a, int n)
 }
 
 template<typename T>
-void Bench2(string path, vt &a, int n)
+void Bench2(string path, vector <T> &a, int n)
 {
     BenchSortFunc(path, "InsertBinarySort", InsertBinarySort, a, n);
     BenchSortFunc(path, "InsertSort", InsertSort, a, n);
